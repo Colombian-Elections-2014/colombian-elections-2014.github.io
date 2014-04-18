@@ -7,7 +7,7 @@ function draw() {
         // general config
 
         var width=400;
-        var height=600;
+        var height=400;
         var margin=[0,60,0,0]; // margin top right bottom left
 
         // helper functions
@@ -54,8 +54,8 @@ function draw() {
                         return x+y; },0)
                 }));
 
-            var bw=width/data.length*0.8;
-            var bs=width/data.length*0.2;
+            var bw=height/data.length*0.8;
+            var bs=height/data.length*0.2;
 
             var xscale=d3.scale.linear()
                 .domain([0,max])
@@ -114,6 +114,11 @@ function draw() {
             return x.Tipo == "gastos";
             }));
         
+        var svg=d3.select("#gastos").append("svg")
+            .attr("viewport","0 0 "+[width,height].join(" ") )
+            .attr("perserveAspectRatio","xMidYMid");
+
+        stackedbar(svg,gastos);
         console.log(gastos);
         });
         }
