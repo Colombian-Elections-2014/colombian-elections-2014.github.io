@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{page.title}} - Columbian Elections</title>
+        <link rel="stylesheet" href="css/elections.css" />
+    </head>
+    <body>
+        {{content}}
+     {% for j in page.js %}
+        <script src="{{j}}"></script>
+     {% endfor %}
+    </body>
+</html>
