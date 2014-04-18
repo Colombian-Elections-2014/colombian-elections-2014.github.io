@@ -24,14 +24,19 @@ svg body {
     }
 
 svg body div.oscar-ivan-zuluaga {
+    background-image: url('/images/escobar.jpg');
     border-color: green;
     }
 
 svg body div.juan-manuel-santos {
+    background-image: url('/images/santos.jpg');
     }
 svg body div.clara-l-pez-obreg-n {
+    background-image: url('/images/lopez.jpg');
     }
 svg body div.martha-lucia-ramirez {
+    background-image: url('/images/ramirez.jpg');
     }
 svg body div.enrique-pen--alosa-london--o {
+    background-image: url('/images/penalosa.jpg');
     }
