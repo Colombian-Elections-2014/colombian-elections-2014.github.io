@@ -8,7 +8,7 @@ function draw() {
 
         var width=400;
         var height=600;
-        var margin=[0,0,0,0]; // margin top right bottom left
+        var margin=[0,60,0,0]; // margin top right bottom left
 
         // helper functions
 
@@ -66,8 +66,8 @@ function draw() {
                 .data(data)
                 .enter()
                 .append("g")
-                .attr("class",function(d) { console.log(d); 
-                return slugify(d[0].Name)
+                .attr("class",function(d) { 
+                return "bars "+slugify(d[0].Name)
                 })
                 .attr("transform",function(d,i) {
                     return "translate(0,"+(margin[0]+i*(bw+bs))+")"; });
@@ -83,7 +83,17 @@ function draw() {
                 .attr("height",bw)
                 .attr("width",function(d) { return xscale(d.Valor); })
                 .attr("class",function(d) { return d.Codigo })
-
+            
+            bars.append("foreignObject")
+                 .attr("y",bw/2-25)
+                 .attr("x",width - 55)
+                 .attr("width", 60)
+                 .attr("height", 60)
+                 .append("xhtml:body")
+                 .attr("xmlns","http://www.w3.org/1999/xhtml")
+                 .append("div")
+                 .attr("class",function(d) {return slugify (d[0].Name) })
+                 .text(function(d) { return d[0].Name; });
 
 
             }

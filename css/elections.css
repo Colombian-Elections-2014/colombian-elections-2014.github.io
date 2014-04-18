@@ -1,4 +1,37 @@
 #ingreso, #gastos {
     width: 400px;
     height: 600px;
+ 
+ }
+
+svg g.bars rect {
+    fill: #333333;
+    stroke: #FFFFFF;
+    }
+
+svg body div {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: #CCFFCC url('/images/person.png');
+    border: 1px solid black;
+    color: transparent;
+
+    }
+
+svg body {
+    margin: 0px;
+    }
+
+svg body div.oscar-ivan-zuluaga {
+    border-color: green;
+    }
+
+svg body div.juan-manuel-santos {
+    }
+svg body div.clara-l-pez-obreg-n {
+    }
+svg body div.martha-lucia-ramirez {
+    }
+svg body div.enrique-pen--alosa-london--o {
     }
