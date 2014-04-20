@@ -1,7 +1,11 @@
 body {
     background-color: rgb(188,207,159);
+    font-family: times, serif;
     }
 
+h1,h2 {
+    font-family: sans;
+    }
 
 .content {
     width: 600px;
