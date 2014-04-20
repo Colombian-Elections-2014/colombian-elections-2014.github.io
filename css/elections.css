@@ -22,28 +22,37 @@ iframe {
  }
 
 .arrow {
-    width: 50px;
-    height: 200px;
+    font-size: 200%;
+    width: 1em;
+    height: 1em;
     position: relative;
-    background: #DDDDDD;
     }
 
 .arrow-left {
-    left: -100px;
+    left: -2em;
     }
 
 .arrow-right {
     left: 620px;
-    top: -200px;
+    top: -1em;
     }
 
 section {
     display: none;
-    margin-top: -400px;
+    margin-top: -5em;
     }
+
 
 section.active {
     display: block;
+    }
+
+section h2 {
+    margin-bottom: 0px;
+    }
+
+section p {
+    margin: 0px;
     }
 
 svg g.bars rect {
