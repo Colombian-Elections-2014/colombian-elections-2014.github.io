@@ -1,6 +1,10 @@
 body {
-    background-color: rgb(236,208,120);
+    background-color: rgb(245,242,196);
     }
+
+#externo{
+    background-color: rgb(188,207,159);
+}
 
 .content {
     width: 600px;
