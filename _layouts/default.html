@@ -2,10 +2,13 @@
 <html>
     <head>
         <title>{{page.title}} - Columbian Elections</title>
+        <meta charset="utf-8" />
         <link rel="stylesheet" href="css/elections.css" />
     </head>
     <body>
+        <div class="content">
         {{content}}
+        </div>
      {% for j in page.js %}
         <script src="{{j}}"></script>
      {% endfor %}

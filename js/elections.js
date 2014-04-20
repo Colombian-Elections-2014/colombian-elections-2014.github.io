@@ -1,126 +1,73 @@
 
-function draw() {
-    var sheet="https://docs.google.com/spreadsheet/pub?hl=en&hl=en&key=0Aq9agjil66PydGdjQlBUZ0FLR0hqZHMzM1BIbUJnYlE&single=true&gid=0&output=csv"
-    d3.csv(sheet,function(data)
-        {
+// show a specific section
+function select(n) {
+    var sections=d3.selectAll("section")
+    sections.data(_.map(_.range(sections.data().length),function(d) {
+        if (d==n) { return 1; }
+        else { return 0; }}));
         
-        // general config
-
-        var width=400;
-        var height=400;
-        var margin=[0,60,0,0]; // margin top right bottom left
-
-        // helper functions
-
-        var slugify=function(s) {
-            return s.toLowerCase().replace(/[^a-z0-9-]/g,"-");
+    sections.attr("class",function(d) { 
+        if (d) { 
+            var iurl=this.getAttribute("data-iframe");
+            d3.select("iframe")
+                .attr("src",iurl);
+            return "active" 
             }
+        else { return "inactive" } });
+    d3.select("#selector svg").selectAll("circle")
+        .data(sections.data())
+        .attr("class",function(d) {
+            if (d) { return "active"}
+            else { return "inactive" } });
+    }
 
-        var aggregate=function(d) {
-            return _.values(_.reduce(d, function(x,y) {
-                x[y.Name] = x[y.Name] || [];
-                x[y.Name].push(y);
-                return x;
-                },{}));
-            }
-        
-        // general data conversions
-        data=_.map(data, function(d) {
-            d.Valor = parseInt(d.Valor);
-            return d;
+function setup_selects() {
+    var radius=4;
+    var sections=_.range(d3.selectAll("section").data().length);
+    var svg=d3.select("#selector").append("svg")
+        .attr("width", sections.length*(radius*2+4))
+        .attr("height", radius*2+4);
+
+    svg.selectAll("circle")
+        .data(sections)
+        .enter()
+        .append("circle")
+        .attr("cx",function(d,i) {
+            return 5+i*(radius*2+4);
+            })
+        .attr("cy",radius+2)
+        .attr("r",radius)
+        .on("click",function(d,i) {
+                select(i); 
             });
-        // general visualization
-
-        var stackedbar=function(svg,data) {
-
-            data=_.map(data, function(d) {
-                var last=0;
-                _.each(d,function(x) {
-                    x.last=last;
-                    last=x.last+x.Valor;
-                    });
-                return d;
-                });
-
-            data=_.sortBy(data,function(d) {
-                return -1*_.reduce(_.pluck(d,"Valor"),
-                    function(x,y) {
-                        return x+y;
-                        },0)});
-
-            var max=_.max(_.map(data,function(d) {
-                return _.reduce(_.pluck(d,"Valor"),
-                    function(x,y) {
-                        return x+y; },0)
-                }));
-
-            var bw=height/data.length*0.8;
-            var bs=height/data.length*0.2;
-
-            var xscale=d3.scale.linear()
-                .domain([0,max])
-                .range([margin[3],width-margin[1]]);
-            
-            console.log(data);
-            var bars=svg.selectAll("g.bars")
-                .data(data)
-                .enter()
-                .append("g")
-                .attr("class",function(d) { 
-                return "bars "+slugify(d[0].Name)
-                })
-                .attr("transform",function(d,i) {
-                    return "translate(0,"+(margin[0]+i*(bw+bs))+")"; });
-
-            bars.selectAll("rect")
-                .data(function(d) { return d; })
-                .enter()
-                .append("rect")
-                .attr("x",function(d) {
-                    return xscale(d.last);
-                    })
-                .attr("y",0)
-                .attr("height",bw)
-                .attr("width",function(d) { return xscale(d.Valor); })
-                .attr("class",function(d) { return d.Codigo })
-            
-            bars.append("foreignObject")
-                 .attr("y",bw/2-25)
-                 .attr("x",width - 55)
-                 .attr("width", 60)
-                 .attr("height", 60)
-                 .append("xhtml:body")
-                 .attr("xmlns","http://www.w3.org/1999/xhtml")
-                 .append("div")
-                 .attr("class",function(d) {return slugify (d[0].Name) })
-                 .text(function(d) { return d[0].Name; });
-
-
-            }
-        // visualization for ingresos
-        var ingresos=aggregate(_.filter(data, function(x) {
-            return x.Tipo == "ingreso"; 
-            }))
-       
-        var svg=d3.select("#ingreso").append("svg")
-            .attr("viewport","0 0 "+[width,height].join(" ") )
-            .attr("perserveAspectRatio","xMidYMid");
-
-        stackedbar(svg,ingresos);
-
-
-        // visualization for gastos
-        var gastos=aggregate(_.filter(data, function(x) {
-            return x.Tipo == "gastos";
-            }));
-        
-        var svg=d3.select("#gastos").append("svg")
-            .attr("viewport","0 0 "+[width,height].join(" ") )
-            .attr("perserveAspectRatio","xMidYMid");
-
-        stackedbar(svg,gastos);
-        console.log(gastos);
-        });
+    
+    var getCurrent=function() {
+        var s=d3.selectAll("section").data();
+        return s.indexOf(1);
         }
 
-document.body.onload=draw();        
+    d3.select(".arrow-left")
+        .on("click",function() {
+            var c=getCurrent()
+            if (c>0) {
+                select(c-1);
+                }
+            else {
+                select(0);
+                }
+            });
+
+    d3.select(".arrow-right")
+        .on("click",function() {
+            var c=getCurrent();
+            if (c+1<sections.length) {
+                select(c+1) }
+            });
+
+    select(0);
+    }
+
+document.body.onload=function() { 
+    setup_selects();
+    draw();      
+    }

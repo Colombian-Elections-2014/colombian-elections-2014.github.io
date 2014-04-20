@@ -1,8 +1,50 @@
-#ingreso, #gastos {
-    width: 400px;
+body {
+    }
+
+.content {
+    width: 600px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+
+iframe {
+    border: none;
+    width: 600px;
     height: 400px;
+    }
+
+#graph {
+    width: 600px;
+    height: 300px;
  
  }
+
+.arrow {
+    width: 50px;
+    height: 200px;
+    position: relative;
+    background: #DDDDDD;
+    }
+
+.arrow-left {
+    left: -100px;
+    }
+
+.arrow-right {
+    left: 620px;
+    top: -200px;
+    }
+
+section {
+    display: none;
+    margin-top: -400px;
+    }
+
+section.active {
+    display: block;
+    }
 
 svg g.bars rect {
     fill: #333333;
@@ -18,6 +60,7 @@ svg body div {
     color: transparent;
 
     }
+
 
 svg body {
     margin: 0px;
@@ -39,4 +82,16 @@ svg body div.martha-lucia-ramirez {
     }
 svg body div.enrique-pen--alosa-london--o {
     background-image: url('/images/penalosa.jpg');
+    }
+#selector circle {
+    fill: #FFFFFF;
+    stroke: #333333;
+    }
+#selector circle.active {
+    fill: #555555;
+    }
+#selector svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     }
